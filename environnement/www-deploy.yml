@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: www
+  name: www
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: www
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: www
+    spec:
+      containers:
+      - image: nginx:1.28
+        name: nginx
+        resources: {}
+        env:
+          - name: STAGE
+            value: kubernetes
+          - name: STAGIAIRES
+            value: "9"
+          - name: PODIP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: NODE
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: INTITULE
+            valueFrom:
+              configMapKeyRef:
+                name: www
+                key: FORMATION
+        envFrom:
+          - configMapRef:
+              name: www
+        ports:
+          - name: http
+            containerPort: 80
+      - image: php:8.2-fpm
+        name: php
+        resources: {}
+status: {}

@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  FORMATION: Kubernetes
+  LEVEL: Initiation
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: www
