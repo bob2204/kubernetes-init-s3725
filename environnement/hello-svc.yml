@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hello
+  name: hello
+  annotations:
+    lbipam.cilium.io/ips: 192.168.56.60
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 32000
+  selector:
+    app: hello
+  type: LoadBalancer
+status:
+  loadBalancer: {}
